@@ -1,0 +1,11 @@
+syntax = "proto3";
+package it.robot.quit;
+import "google/protobuf/empty.proto";
+
+message QuitRequest {
+  int32 robot_id = 1;
+}
+
+service Quit {
+  rpc quit(QuitRequest) returns (google.protobuf.Empty);
+}

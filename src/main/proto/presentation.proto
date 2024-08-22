@@ -1,0 +1,19 @@
+syntax = "proto3";
+package it.robot.presentation;
+import "google/protobuf/empty.proto";
+
+message PresentationData {
+  int32 id = 1;
+  int32 port = 2;
+  Position position = 3;
+  string district = 4;
+}
+
+message Position {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+service Presentation {
+  rpc presentation (PresentationData) returns (google.protobuf.Empty);
+}

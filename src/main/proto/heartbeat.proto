@@ -1,0 +1,7 @@
+syntax = "proto3";
+package it.robot.heartbeat;
+import "google/protobuf/empty.proto";
+
+service Heartbeat {
+  rpc heartbeat(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

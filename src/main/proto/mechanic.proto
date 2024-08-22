@@ -1,0 +1,19 @@
+syntax = "proto3";
+package it.robot.mechanic;
+import "google/protobuf/empty.proto";
+
+message RobotAccessRequest {
+  int32 robot_id = 1;
+  int32 robot_port = 2;
+  int64 timestamp = 3;
+}
+
+message Acknowledgement {
+  string ack = 1;
+  int32 robot_id = 2;
+}
+
+service Mechanic {
+  rpc requestAccess(RobotAccessRequest) returns (Acknowledgement);
+  rpc releaseAccess(Acknowledgement) returns (google.protobuf.Empty);
+}
