@@ -1,6 +1,7 @@
 package RestServer;
 
 import RestServer.configs.ServerConfig;
+import RestServer.threads.SubscribingThread;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.net.httpserver.HttpServer;
 
@@ -12,16 +13,20 @@ public class AdminServer {
 
     public static void main(String[] args) throws IOException {
         startServer();
+        startSubscribingThread();
         stopServer();
     }
 
     private static void startServer() throws IOException {
-        server = HttpServerFactory.create(ServerConfig.ADDRESS);
+        server = HttpServerFactory.create(ServerConfig.ADDRESS+"/");
         server.start();
         System.out.printf("%s%s%n",
-                ServerConfig.START_MESSAGE, ServerConfig.ADDRESS);
+                ServerConfig.START_MESSAGE, ServerConfig.ADDRESS+"/");
     }
 
+    private static void startSubscribingThread() {
+        new SubscribingThread().start();
+    }
 
     private static void stopServer() throws IOException {
         System.out.printf("%s%n",

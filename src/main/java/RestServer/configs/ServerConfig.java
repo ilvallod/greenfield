@@ -2,7 +2,7 @@ package RestServer.configs;
 
 public class ServerConfig {
     public static final int PORT = 1337;
-    public static final String ADDRESS = String.format("http://localhost:%d/", PORT);
+    public static final String ADDRESS = String.format("http://localhost:%d", PORT);
 
     // ADMIN CLIENT MESSAGES
     public static final String ADMIN_CLIENT_INPUT_ROBOT_ID = "\nEnter the robot id: ";
@@ -21,10 +21,10 @@ public class ServerConfig {
             "Insert a command between 1 and 4: ";
 
     // ENDPOINTS
-    public static final String ADDRESS_ROBOTS = String.format("%srobots/", ADDRESS);
+    public static final String ADDRESS_ROBOTS = String.format("%s/robots/", ADDRESS);
     public static final String ADDRESS_ROBOTS_ADD = String.format("%s/robots/add", ADDRESS);
     public static final String ADDRESS_ROBOTS_REMOVE = String.format("%s/robots/remove", ADDRESS);
-    public static final String ADDRESS_STATISTICS = String.format("%sstatistics/", ADDRESS);
+    public static final String ADDRESS_STATISTICS = String.format("%s/statistics/", ADDRESS);
     public static final String ADDRESS_STATISTICS_ADD = String.format("%s/statistics/add", ADDRESS);
 
     // FIX MESSAGES
@@ -33,6 +33,9 @@ public class ServerConfig {
     // ROBOT MESSAGES
     public static final String ROBOT_ADDED_MESSAGE = "Robot added! Starting position ";
     public static final String ROBOT_CONFLICT_MESSAGE = "Robot with this ID/port already in the system";
+    public static final String ROBOT_INPUT_ERROR = "Invalid input. Please enter a valid integer.";
+    public static final String ROBOT_INPUT_ID = "Insert robot id: ";
+    public static final String ROBOT_INPUT_PORT = "Insert robot port: ";
     public static final String ROBOT_LIST_MESSAGE = "Robot already in the system:";
 
     // REPAIRING MESSAGE
