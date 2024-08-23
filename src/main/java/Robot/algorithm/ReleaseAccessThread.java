@@ -1,4 +1,5 @@
 package Robot.algorithm;
+import Grpc.configs.GrpcServerConfig;
 import Robot.Robot;
 import Robot.threads.QuitMessageThread;
 import com.google.protobuf.Empty;
@@ -8,10 +9,22 @@ import io.grpc.stub.StreamObserver;
 import it.robot.mechanic.MechanicGrpc;
 import it.robot.mechanic.MechanicOuterClass.*;
 
-import java.util.concurrent.TimeUnit;
-
 import static Robot.utilities.RestMethods.removal;
 
+/**
+ * The {@code ReleaseAccessThread} class is responsible for releasing access to a robot after
+ * it has completed a mechanic operation. This thread sends an acknowledgment message from the
+ * sender robot to the receiver robot over a gRPC connection, indicating that the sender has
+ * released access and the receiver can proceed with its operations.
+ *
+ * <p>If the receiver robot is unresponsive or crashes, this thread also
+ * handles removing the receiver from the queue and sending a quit message to other connected robots.</p>
+ *
+ * @see ManagedChannel
+ * @see StreamObserver
+ * @see MechanicGrpc
+ * @see Acknowledgement
+ */
 public class ReleaseAccessThread extends Thread {
     private final Robot sender;
     private final Robot receiver;
@@ -32,9 +45,7 @@ public class ReleaseAccessThread extends Thread {
         MechanicGrpc.MechanicStub stub = MechanicGrpc.newStub(channel);
         stub.releaseAccess(acknowledgement, new StreamObserver<Empty>() {
             @Override
-            public void onNext(Empty value) {
-
-            }
+            public void onNext(Empty value) {}
 
             //If a robot in queue crashes
             @Override
@@ -42,7 +53,6 @@ public class ReleaseAccessThread extends Thread {
                 sender.removeFromMechanicRequests(receiver); //Remove from queue
                 sendQuitMessage(sender, receiver);
                 removal(receiver.getId());
-
                 channel.shutdown();
             }
 
@@ -52,13 +62,16 @@ public class ReleaseAccessThread extends Thread {
             }
         });
 
-        try {
-            channel.awaitTermination(10, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            System.out.println("Await termination error");
-        }
+        GrpcServerConfig.awaitChannelTermination(channel);
     }
 
+    /**
+     * Sends a quit message to all connected robots, excluding the sender, to notify them
+     * that the receiver robot is no longer available.
+     *
+     * @param sender the robot that is sending the quit messages
+     * @param receiver the robot that is being removed from the network
+     */
     private void sendQuitMessage(Robot sender, Robot receiver) {
         sender.getConnectedRobots().stream()
                 .filter(r -> r.getId() != getId())
