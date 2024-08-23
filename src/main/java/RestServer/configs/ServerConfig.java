@@ -26,4 +26,20 @@ public class ServerConfig {
     // STATUS
     public static final int HTTP_OK = 200;
     public static final int HTTP_CONFLICT = 409;
+
+    // STANDARD INPUT
+    public static final String STDIN_QUIT = "[STANDARD INPUT] Write \"quit\" to delete robot.";
+    public static final String STDIN_FIX = "[STANDARD INPUT] Write \"fix\" to go to mechanic.";
+
+    // FIX MESSAGES
+    public static final String FIX_REQUEST = "Fix request already started!";
+
+    // QUIT MESSAGES
+    public static final String QUIT_START = "[QUIT] Quit received from user";
+    public static final String QUIT_END = "[QUIT] Robot ending work";
+
+    // REPAIRING MESSAGE
+    public static final String REPAIR_START = "\nRobot can now repair\n";
+    public static final String REPAIRING = "\n... Repairing ...\n";
+    public static final String REPAIR_END = "\n[MUTEX] Robot completely repaired \n";
 }
