@@ -64,3 +64,6 @@ To start the Greenfield project, follow these steps:
 6. **Run the Administrator Client**: 
    Use the Administrator Client to interact with the Administrator Server and obtain statistics or manage the robot fleet.
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
