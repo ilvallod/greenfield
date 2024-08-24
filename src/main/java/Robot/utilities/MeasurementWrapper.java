@@ -33,7 +33,6 @@ public class MeasurementWrapper {
 
     @Override
     public String toString() {
-        //TODO: remove hardcoded text
         return String.format(
                 Colors.ANSI_GRAY +"\nAverages from: %d\n%s\nTimestamp: %d\n\n" +Colors.ANSI_RESET,
                 getRobotId(), getValues().toString(), getCurrentTimestamp());
